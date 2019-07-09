@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cosby.dk.ungdomsskolen.AddClassViewController">
+   <children>
+      <TextField fx:id="tf_className" layoutX="14.0" layoutY="41.0" onAction="#changeClassName" prefHeight="25.0" prefWidth="177.0" promptText="Write the class name" />
+      <Label fx:id="lbl_className" layoutX="14.0" layoutY="24.0" text="Class name" />
+      <TextField fx:id="tf_studentName" layoutX="14.0" layoutY="97.0" onAction="#addStudent" prefHeight="25.0" prefWidth="177.0" promptText="Write a name" />
+      <Label fx:id="lbl_studentName" layoutX="14.0" layoutY="80.0" text="Student name" />
+      <TextArea fx:id="ta_classStudentList" editable="false" layoutX="220.0" layoutY="42.0" prefHeight="283.0" prefWidth="366.0" promptText="Add students to see the list of students here!" />
+      <Label fx:id="lbl_classNameTitle" layoutX="220.0" layoutY="11.0" prefHeight="25.0" prefWidth="199.0" text="Add a Class Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_saveClass" layoutX="515.0" layoutY="359.0" mnemonicParsing="false" onAction="#saveClass" text="Save Class" />
+      <Button fx:id="btn_goBack" layoutX="435.0" layoutY="359.0" mnemonicParsing="false" onAction="#toMainScreen" prefHeight="25.0" prefWidth="71.0" text="Go Back" />
+   </children>
+</AnchorPane>
