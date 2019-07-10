@@ -73,6 +73,12 @@ public class Class {
         this.class_id = class_id;
     }
 
+    public void addStudentToClass (String studentName){
+        if (!studentName.isEmpty()) {
+            studentList.add(new Student(studentName));
+        }
+    }
+
     public ArrayList<Student> getStudentList() {
         return studentList;
     }
