@@ -2,7 +2,12 @@ package cosby.dk.ungdomsskolen;
 
 import cosby.dk.ungdomsskolen.model.Class;
 import cosby.dk.ungdomsskolen.model.Student;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +27,9 @@ public class AddClassViewController {
     @FXML
     TextArea ta_classStudentList;
     @FXML
-    TextField tf_studentName, tf_className;
+    TextField tf_studentName;
+    @FXML
+    TextField tf_className;
     @FXML
     Button btn_goBack, btn_saveClass;
 
@@ -32,33 +39,33 @@ public class AddClassViewController {
         currentClass = new Class();
     }
 
-    public void toMainScreen(ActionEvent actionEvent) {
-
-        try {
-            Parent mainRoot = FXMLLoader.load(getClass().getClassLoader().getResource("main_screen.fxml"));
-            Main.getPrimaryStage().setScene(new Scene(mainRoot, 600, 400));
-
-        } catch (IOException e) {
-            System.out.println("Failed to load classRoot");
-            e.printStackTrace();
-        }
-
-
+    @FXML
+    public void initialize() {
+        tf_className.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                currentClass.setClass_id(newValue);
+                lbl_classNameTitle.setText(currentClass.getClass_id());
+            }
+        });
     }
 
     public void changeClassName(ActionEvent actionEvent) {
 
-        currentClass.setClass_id(tf_className.getText());
-        lbl_classNameTitle.setText(currentClass.getClass_id());
-        updateTextArea();
 
-        System.out.println("Set class name to " + tf_className.getText());
+//        currentClass.setClass_id(tf_className.getText());
+//        lbl_classNameTitle.setText(currentClass.getClass_id());
+//        updateTextArea();
+//
+//        System.out.println("Set class name to " + tf_className.getText());
 
     }
 
     public void addStudent(ActionEvent actionEvent) {
 
         currentClass.addStudentToClass(tf_studentName.getText());
+        tf_studentName.setText("");
+
         updateTextArea();
 
         System.out.println("add student with the name of " + tf_studentName.getText());
@@ -88,4 +95,17 @@ public class AddClassViewController {
         }
 
     }
+
+    public void toMainScreen(ActionEvent actionEvent) {
+
+        try {
+            Parent mainRoot = FXMLLoader.load(getClass().getClassLoader().getResource("main_screen.fxml"));
+            Main.getPrimaryStage().setScene(new Scene(mainRoot, 600, 400));
+
+        } catch (IOException e) {
+            System.out.println("Failed to load classRoot");
+            e.printStackTrace();
+        }
+    }
+
 }

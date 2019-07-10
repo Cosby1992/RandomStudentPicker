@@ -1,14 +1,17 @@
 package cosby.dk.ungdomsskolen;
 
+import cosby.dk.ungdomsskolen.model.Class;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class MainScreenController {
@@ -24,10 +27,20 @@ public class MainScreenController {
     @FXML
     MenuBar menuBar_menu;
 
+    private List<Class> classes;
+
     public MainScreenController() throws IOException {
 
+    }
 
+    @SuppressWarnings("unchecked")
+    public void initialize(){
 
+        FileAdapter fileAdapter = new FileAdapter();
+
+        ObservableList<String> list = FXCollections.observableArrayList(fileAdapter.getFileList());
+        choiceBox_selectClass.setItems(list);
+        choiceBox_selectClass.getSelectionModel().selectFirst();
 
     }
 
