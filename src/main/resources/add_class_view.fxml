@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cosby.dk.ungdomsskolen.AddClassViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cosby.dk.ungdomsskolen.view.controller.AddClassViewController">
    <children>
       <TextField fx:id="tf_className" layoutX="14.0" layoutY="41.0" onAction="#changeClassName" prefHeight="25.0" prefWidth="177.0" promptText="Write the class name" />
       <Label fx:id="lbl_className" layoutX="14.0" layoutY="24.0" text="Class name" />

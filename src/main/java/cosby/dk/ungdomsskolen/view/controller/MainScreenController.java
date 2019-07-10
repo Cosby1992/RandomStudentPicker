@@ -1,6 +1,7 @@
-package cosby.dk.ungdomsskolen;
+package cosby.dk.ungdomsskolen.view.controller;
 
-import cosby.dk.ungdomsskolen.model.Class;
+import cosby.dk.ungdomsskolen.FileAdapter;
+import cosby.dk.ungdomsskolen.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,11 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.util.List;
 
 
+/**
+ * Controller for main_screen.fxml
+ * Handles inputs from user, modulates model classes and updates UI accordingly
+ */
 public class MainScreenController {
 
+    //Variables (gui objects) from fxml layout file
     @FXML
     Button button_spinTheWheel;
     @FXML
@@ -27,15 +32,11 @@ public class MainScreenController {
     @FXML
     MenuBar menuBar_menu;
 
-    private List<Class> classes;
-
-    public MainScreenController() throws IOException {
-
-    }
 
     @SuppressWarnings("unchecked")
     public void initialize(){
 
+        //filling choisebox with options (filenames)
         FileAdapter fileAdapter = new FileAdapter();
 
         ObservableList<String> list = FXCollections.observableArrayList(fileAdapter.getFileList());
@@ -52,18 +53,22 @@ public class MainScreenController {
     }
 
 
-
+    /**
+     * Sends user to add_class_view.fxml view
+     * Runs when user presses menu options "add class"
+     */
     public void addNewClass(ActionEvent actionEvent) {
 
+        //updates UI
         try {
             Parent classRoot = FXMLLoader.load(getClass().getClassLoader().getResource("add_class_view.fxml"));
-           Main.getPrimaryStage().setScene(new Scene(classRoot, 600, 400));
+            Main.getPrimaryStage().setScene(new Scene(classRoot, 600, 400));
 
         } catch (IOException e) {
+            //if resource fails to load
             System.out.println("Failed to load classRoot");
             e.printStackTrace();
         }
-
     }
 
     public void addStudentToClass(ActionEvent actionEvent) {

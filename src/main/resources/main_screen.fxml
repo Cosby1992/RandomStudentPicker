@@ -9,7 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cosby.dk.ungdomsskolen.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cosby.dk.ungdomsskolen.view.controller.MainScreenController">
    <children>
       <Button fx:id="button_spinTheWheel" layoutX="14.0" layoutY="188.0" mnemonicParsing="false" onAction="#spinWheel" text="Spin The Wheel" />
       <ListView fx:id="listView_studentWheel" layoutX="245.0" layoutY="14.0" prefHeight="373.0" prefWidth="340.0" />
