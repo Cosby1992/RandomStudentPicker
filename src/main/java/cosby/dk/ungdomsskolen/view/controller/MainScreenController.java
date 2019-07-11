@@ -1,15 +1,26 @@
 package cosby.dk.ungdomsskolen.view.controller;
 
+import com.sun.org.apache.xerces.internal.dom.ChildNode;
+import cosby.dk.ungdomsskolen.ArcGenerator;
 import cosby.dk.ungdomsskolen.FileAdapter;
 import cosby.dk.ungdomsskolen.Main;
+import cosby.dk.ungdomsskolen.model.Class;
+import javafx.animation.RotateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -20,11 +31,12 @@ import java.io.IOException;
  */
 public class MainScreenController {
 
+
     //Variables (gui objects) from fxml layout file
     @FXML
-    Button button_spinTheWheel;
+    AnchorPane ap_anchorPane;
     @FXML
-    ListView listView_studentWheel;
+    Button button_spinTheWheel;
     @FXML
     ChoiceBox choiceBox_selectClass;
     @FXML
@@ -32,21 +44,100 @@ public class MainScreenController {
     @FXML
     MenuBar menuBar_menu;
 
+    private ArcGenerator arcGenerator;
+    private Class currentClass;
+    private String filenameSelected;
+    private FileAdapter fileAdapter;
+
 
     @SuppressWarnings("unchecked")
     public void initialize(){
 
         //filling choisebox with options (filenames)
-        FileAdapter fileAdapter = new FileAdapter();
+        fileAdapter = new FileAdapter();
 
         ObservableList<String> list = FXCollections.observableArrayList(fileAdapter.getFileList());
         choiceBox_selectClass.setItems(list);
         choiceBox_selectClass.getSelectionModel().selectFirst();
 
+
+
+        //generating the student wheel from the selected item in the choise box
+        filenameSelected = fileAdapter.getFileList().get(0);
+
+        arcGenerator = new ArcGenerator();
+        currentClass = new Class();
+
+        currentClass.setClass_id(filenameSelected.replace(".txt", ""));
+        currentClass.readArrayListFromFile();
+
+        arcGenerator.generateWheel(currentClass.getStudentList(), new Point2D(400,200));
+        ap_anchorPane.getChildren().add(4, arcGenerator.getGroup());
+        ap_anchorPane.getChildren().add(5, arcGenerator.getLabelNames());
+        ap_anchorPane.getChildren().get(5).toFront();
+
+
+        choiceBox_selectClass.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                filenameSelected = fileAdapter.getFileList().get(newValue.intValue());
+                currentClass.setClass_id(filenameSelected.replace(".txt", ""));
+                currentClass.readArrayListFromFile();
+
+                arcGenerator.generateWheel(currentClass.getStudentList(), new Point2D(400,200));
+                ap_anchorPane.getChildren().remove(5);
+                ap_anchorPane.getChildren().remove(4);
+                ap_anchorPane.getChildren().add(4, arcGenerator.getGroup());
+                ap_anchorPane.getChildren().add(5, arcGenerator.getLabelNames());
+                ap_anchorPane.getChildren().get(5).toFront();
+            }
+        });
+
+
     }
 
-
+    private long timerForSpin = System.currentTimeMillis()-7000;
     public void spinWheel(ActionEvent actionEvent) {
+
+        long newTime = System.currentTimeMillis();
+
+        if(newTime > timerForSpin+7000) {
+            timerForSpin = newTime;
+            RotateTransition wheelTransition = new RotateTransition();
+
+            wheelTransition.setDuration(Duration.seconds(7));
+            wheelTransition.setNode(ap_anchorPane.getChildren().get(4));
+
+            int rotation = (int) (Math.random() * 1080) + 4000;
+            System.out.println("Spinning wheel rotation angle set to " + rotation);
+            wheelTransition.setByAngle(rotation);
+
+            //Setting the cycle count for the transition
+            wheelTransition.setCycleCount(1);
+
+            //Setting auto reverse value to false
+            wheelTransition.setAutoReverse(false);
+
+            RotateTransition labelTransition = new RotateTransition();
+
+            labelTransition.setDuration(Duration.seconds(7));
+            labelTransition.setNode(ap_anchorPane.getChildren().get(5));
+
+            System.out.println("Spinning wheel rotation angle set to " + rotation);
+            labelTransition.setByAngle(rotation);
+
+            //Setting the cycle count for the transition
+            labelTransition.setCycleCount(1);
+
+            //Setting auto reverse value to false
+            labelTransition.setAutoReverse(false);
+
+            //Playing the animation
+            labelTransition.play();
+
+            //Playing the animation
+            wheelTransition.play();
+        }
 
         System.out.println("Spinning Wheel");
 

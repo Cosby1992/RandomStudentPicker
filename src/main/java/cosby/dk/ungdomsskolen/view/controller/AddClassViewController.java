@@ -60,7 +60,7 @@ public class AddClassViewController {
     }
 
     //runs when user presses enter in class name textfield
-    //not used at the moment
+    //not used at the moment // replaced with listener
     public void changeClassName(ActionEvent actionEvent) {
 
 
